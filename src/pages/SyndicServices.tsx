@@ -10,47 +10,76 @@ import {
   Bell,
   CheckCircle2,
   ArrowRight,
+  Wrench,
+  Scale,
+  MessageSquare,
+  Euro,
+  Building2,
+  ClipboardList,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const features = [
+const coreServices = [
   {
     icon: Brain,
     title: "Assistant IA 24/7",
     description:
-      "Un assistant intelligent disponible en permanence pour répondre aux questions des copropriétaires et gérer les demandes.",
+      "Un assistant intelligent disponible en permanence pour répondre aux questions des copropriétaires et traiter les demandes courantes automatiquement.",
   },
   {
     icon: FileText,
-    title: "Comptabilité automatisée",
+    title: "Comptabilité Automatisée",
     description:
-      "Génération automatique des décomptes, appels de fonds et bilans. Transparence totale sur les finances.",
-  },
-  {
-    icon: Clock,
-    title: "Maintenance prédictive",
-    description:
-      "L'IA anticipe les besoins de maintenance avant qu'ils ne deviennent des problèmes coûteux.",
-  },
-  {
-    icon: BarChart3,
-    title: "Reporting temps réel",
-    description:
-      "Tableaux de bord interactifs pour suivre l'état de votre copropriété en un coup d'œil.",
-  },
-  {
-    icon: Shield,
-    title: "Conformité garantie",
-    description:
-      "Veille réglementaire automatique et mise en conformité continue de votre immeuble.",
+      "Génération automatique des décomptes, appels de fonds, et bilans financiers. Transparence totale et accès en temps réel.",
   },
   {
     icon: Users,
     title: "Gestion des AG",
     description:
-      "Organisation simplifiée des assemblées générales avec vote en ligne et procès-verbaux automatiques.",
+      "Organisation simplifiée des assemblées générales avec convocations automatiques, vote en ligne et procès-verbaux générés par l'IA.",
+  },
+  {
+    icon: Wrench,
+    title: "Maintenance Prédictive",
+    description:
+      "L'IA analyse les données de votre immeuble pour anticiper les besoins de maintenance avant qu'ils ne deviennent des problèmes coûteux.",
+  },
+  {
+    icon: BarChart3,
+    title: "Reporting Temps Réel",
+    description:
+      "Tableaux de bord interactifs pour suivre l'état financier et technique de votre copropriété en un coup d'œil.",
+  },
+  {
+    icon: Shield,
+    title: "Conformité Réglementaire",
+    description:
+      "Veille juridique automatique et mise en conformité continue : RGPD, sécurité incendie, diagnostics obligatoires.",
+  },
+];
+
+const additionalServices = [
+  {
+    icon: Scale,
+    title: "Médiation & Litiges",
+    description: "Gestion des conflits entre copropriétaires et accompagnement juridique.",
+  },
+  {
+    icon: Euro,
+    title: "Recouvrement",
+    description: "Suivi des impayés et procédures de recouvrement automatisées.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Audits Techniques",
+    description: "Inspections régulières et rapports détaillés sur l'état de l'immeuble.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Communication",
+    description: "Plateforme de communication unifiée entre syndic et copropriétaires.",
   },
 ];
 
@@ -61,6 +90,8 @@ const benefits = [
   "Zéro paperasse grâce au 100% digital",
   "Anticipation des travaux nécessaires",
   "Communication fluide avec tous les copropriétaires",
+  "Conformité légale garantie",
+  "Valorisation de votre patrimoine",
 ];
 
 const SyndicServices = () => {
@@ -92,7 +123,8 @@ const SyndicServices = () => {
 
               <p className="mt-6 max-w-lg text-lg text-primary-foreground/70">
                 Dites adieu aux tracas administratifs. Notre syndic intelligent gère
-                votre immeuble avec précision, transparence et réactivité.
+                votre immeuble avec précision, transparence et réactivité. Focus sur
+                ce qui compte : valoriser votre patrimoine.
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -173,7 +205,7 @@ const SyndicServices = () => {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Core Services */}
       <section className="py-20 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
@@ -183,19 +215,23 @@ const SyndicServices = () => {
             className="text-center"
           >
             <span className="text-sm font-medium uppercase tracking-wider text-accent">
-              Fonctionnalités
+              Services Principaux
             </span>
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
-              Tout ce dont vous avez besoin,
+              Une gestion complète,
               <br />
-              <span className="text-accent">automatisé par l'IA</span>
+              <span className="text-accent">automatisée par l'IA</span>
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Notre plateforme centralise tous les aspects de la gestion de copropriété,
+              avec une intelligence artificielle qui travaille 24/7 pour vous.
+            </p>
           </motion.div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-            {features.map((feature, index) => (
+            {coreServices.map((service, index) => (
               <motion.div
-                key={feature.title}
+                key={service.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -203,13 +239,55 @@ const SyndicServices = () => {
                 className="glass-card p-6"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sage-light text-accent">
-                  <feature.icon className="h-6 w-6" />
+                  <service.icon className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-display text-lg font-semibold">
-                  {feature.title}
+                  {service.title}
                 </h3>
                 <p className="mt-2 text-muted-foreground">
-                  {feature.description}
+                  {service.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Services */}
+      <section className="bg-muted py-20 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <span className="text-sm font-medium uppercase tracking-wider text-accent">
+              Services Complémentaires
+            </span>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
+              Un accompagnement sur mesure
+            </h2>
+          </motion.div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {additionalServices.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="glass-card p-5 text-center"
+              >
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+                  <service.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 font-display font-semibold">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {service.description}
                 </p>
               </motion.div>
             ))}
@@ -218,7 +296,7 @@ const SyndicServices = () => {
       </section>
 
       {/* Benefits */}
-      <section className="bg-muted py-20 lg:py-32">
+      <section className="py-20 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <motion.div
@@ -237,25 +315,25 @@ const SyndicServices = () => {
                 premiers mois. L'IA transforme la gestion de votre immeuble.
               </p>
 
-              <ul className="mt-8 space-y-4">
+              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
                 {benefits.map((benefit, index) => (
                   <motion.li
                     key={benefit}
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
                     className="flex items-center gap-3"
                   >
-                    <CheckCircle2 className="h-5 w-5 text-accent" />
-                    <span>{benefit}</span>
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-accent" />
+                    <span className="text-sm">{benefit}</span>
                   </motion.li>
                 ))}
               </ul>
 
               <Link to="/portal" className="mt-8 inline-block">
                 <Button variant="sage" size="lg">
-                  Commencer gratuitement
+                  Demander un devis gratuit
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
@@ -282,17 +360,20 @@ const SyndicServices = () => {
               </div>
 
               <blockquote className="mt-6 text-lg">
-                "Depuis que nous avons adopté ImmoTrust Syndic, la gestion de notre
+                "Depuis que nous avons adopté SyndicIA, la gestion de notre
                 copropriété a été transformée. L'assistant IA répond instantanément
-                aux demandes et les décomptes sont toujours à jour."
+                aux demandes et les décomptes sont toujours à jour. Nous avons enfin
+                une vraie transparence sur les finances."
               </blockquote>
 
               <div className="mt-6 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-sage-light" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sage-light text-accent">
+                  <Building2 className="h-6 w-6" />
+                </div>
                 <div>
                   <p className="font-medium">Marie Dubois</p>
                   <p className="text-sm text-muted-foreground">
-                    Présidente du conseil, Résidence Les Érables
+                    Présidente du conseil, Résidence Les Érables (48 lots)
                   </p>
                 </div>
               </div>
@@ -315,12 +396,12 @@ const SyndicServices = () => {
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-primary-foreground/70">
                 Demandez une démonstration personnalisée et découvrez comment notre
-                syndic IA peut transformer votre quotidien.
+                syndic IA peut transformer votre quotidien et valoriser votre patrimoine.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Link to="/portal">
                   <Button variant="sage" size="xl">
-                    Demander une démo
+                    Demander une démo gratuite
                   </Button>
                 </Link>
                 <Button
