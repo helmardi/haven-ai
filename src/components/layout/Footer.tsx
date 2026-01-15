@@ -13,11 +13,12 @@ const Footer = () => {
                 <Building2 className="h-5 w-5 text-accent-foreground" />
               </div>
               <span className="font-display text-xl font-semibold">
-                ImmoTrust
+                SyndicIA
               </span>
             </Link>
             <p className="text-sm text-primary-foreground/70">
-              Votre partenaire de confiance pour l'immobilier et la gestion de propriété. Propulsé par l'intelligence artificielle.
+              Le syndic de copropriété nouvelle génération. Gestion transparente, 
+              réactive et intelligente propulsée par l'IA.
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-primary-foreground/60 transition-colors hover:text-accent">
@@ -32,59 +33,64 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Services Syndic */}
           <div className="space-y-4">
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider">
-              Services
+              Services Syndic
             </h4>
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li>
-                <Link to="/properties?type=sale" className="transition-colors hover:text-accent">
-                  Achat immobilier
-                </Link>
-              </li>
-              <li>
-                <Link to="/properties?type=rent" className="transition-colors hover:text-accent">
-                  Location
-                </Link>
-              </li>
-              <li>
                 <Link to="/syndic" className="transition-colors hover:text-accent">
-                  Syndic de copropriété
+                  Gestion de copropriété
                 </Link>
               </li>
               <li>
-                <Link to="/estimate" className="transition-colors hover:text-accent">
-                  Estimation gratuite
+                <Link to="/services#ag" className="transition-colors hover:text-accent">
+                  Assemblées générales
+                </Link>
+              </li>
+              <li>
+                <Link to="/services#comptabilite" className="transition-colors hover:text-accent">
+                  Comptabilité & décomptes
+                </Link>
+              </li>
+              <li>
+                <Link to="/services#maintenance" className="transition-colors hover:text-accent">
+                  Maintenance prédictive
+                </Link>
+              </li>
+              <li>
+                <Link to="/services#juridique" className="transition-colors hover:text-accent">
+                  Conseil juridique
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Services Additionnels */}
           <div className="space-y-4">
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider">
-              Entreprise
+              Services Complémentaires
             </h4>
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li>
-                <Link to="/about" className="transition-colors hover:text-accent">
-                  À propos
+                <Link to="/properties?type=sale" className="transition-colors hover:text-accent">
+                  Biens à vendre (via nos copropriétaires)
                 </Link>
               </li>
               <li>
-                <Link to="/team" className="transition-colors hover:text-accent">
-                  Notre équipe
+                <Link to="/properties?type=rent" className="transition-colors hover:text-accent">
+                  Biens à louer (via nos copropriétaires)
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="transition-colors hover:text-accent">
-                  Carrières
+                <Link to="/services#estimation" className="transition-colors hover:text-accent">
+                  Estimation de biens
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="transition-colors hover:text-accent">
-                  Blog
+                <Link to="/services#gestion-locative" className="transition-colors hover:text-accent">
+                  Gestion locative
                 </Link>
               </li>
             </ul>
@@ -108,18 +114,23 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:info@immotrust.be" className="transition-colors hover:text-accent">
-                  info@immotrust.be
+                <a href="mailto:contact@syndicia.be" className="transition-colors hover:text-accent">
+                  contact@syndicia.be
                 </a>
               </li>
             </ul>
+            <div className="pt-2">
+              <p className="text-xs text-primary-foreground/50">
+                Assistance 24/7 via notre IA
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-primary-foreground/10 pt-8 md:flex-row">
           <p className="text-xs text-primary-foreground/50">
-            © 2024 ImmoTrust. Tous droits réservés.
+            © 2024 SyndicIA. Tous droits réservés. IPI n° 123456
           </p>
           <div className="flex gap-6 text-xs text-primary-foreground/50">
             <Link to="/privacy" className="transition-colors hover:text-accent">
