@@ -1,70 +1,160 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, Building2, Key, Home, Sparkles, ArrowRight, ChevronRight } from "lucide-react";
+import { 
+  Building2, 
+  Sparkles, 
+  ArrowRight, 
+  ChevronRight,
+  Brain,
+  FileText,
+  BarChart3,
+  Shield,
+  Users,
+  Clock,
+  Wrench,
+  Calculator,
+  Scale,
+  Home,
+  Key
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import PropertyCard from "@/components/PropertyCard";
 import ServiceCard from "@/components/ServiceCard";
-import { propertyService, Property } from "@/services/propertyService";
 import heroImage from "@/assets/hero-image.jpg";
 
-const services = [
+// Main Syndic Services
+const syndicServices = [
+  {
+    icon: Brain,
+    title: "Assistant IA 24/7",
+    description: "Un assistant intelligent disponible en permanence pour répondre instantanément aux questions des copropriétaires.",
+    href: "/syndic#assistant",
+    features: [
+      "Réponses instantanées",
+      "Signalement d'incidents",
+      "Suivi des demandes",
+      "Multilingue",
+    ],
+  },
+  {
+    icon: Calculator,
+    title: "Comptabilité Automatisée",
+    description: "Décomptes, appels de fonds et bilans générés automatiquement avec une transparence totale.",
+    href: "/syndic#comptabilite",
+    features: [
+      "Décomptes en temps réel",
+      "Appels de fonds automatiques",
+      "Rapports financiers",
+      "Export comptable",
+    ],
+  },
+  {
+    icon: Users,
+    title: "Gestion des AG",
+    description: "Organisation simplifiée des assemblées générales avec vote électronique et procès-verbaux automatiques.",
+    href: "/syndic#ag",
+    features: [
+      "Convocations digitales",
+      "Vote en ligne sécurisé",
+      "PV automatiques",
+      "Suivi des décisions",
+    ],
+  },
+  {
+    icon: Wrench,
+    title: "Maintenance Prédictive",
+    description: "L'IA anticipe les besoins de maintenance avant qu'ils ne deviennent des problèmes coûteux.",
+    href: "/syndic#maintenance",
+    features: [
+      "Alertes préventives",
+      "Planning automatisé",
+      "Réseau d'artisans vérifiés",
+      "Suivi des interventions",
+    ],
+  },
+  {
+    icon: BarChart3,
+    title: "Reporting Temps Réel",
+    description: "Tableaux de bord interactifs pour suivre l'état de votre copropriété en un coup d'œil.",
+    href: "/syndic#reporting",
+    features: [
+      "Dashboards personnalisés",
+      "Indicateurs clés",
+      "Historique complet",
+      "Alertes intelligentes",
+    ],
+  },
+  {
+    icon: Scale,
+    title: "Conseil Juridique",
+    description: "Veille réglementaire automatique et accompagnement juridique pour votre copropriété.",
+    href: "/syndic#juridique",
+    features: [
+      "Veille légale IA",
+      "Mise en conformité",
+      "Gestion des litiges",
+      "Contrats sécurisés",
+    ],
+  },
+];
+
+// Additional services from trust
+const additionalServices = [
   {
     icon: Home,
-    title: "Acheter",
-    description: "Trouvez le bien de vos rêves parmi notre sélection exclusive de propriétés.",
+    title: "Vente de Biens",
+    description: "Nos copropriétaires nous font confiance pour vendre leurs biens. Bénéficiez de notre réseau et expertise.",
     href: "/properties?type=sale",
     features: [
-      "Recherche personnalisée IA",
-      "Visites virtuelles 3D",
-      "Accompagnement juridique",
-      "Financement sur mesure",
+      "Estimation IA gratuite",
+      "Mise en valeur pro",
+      "Réseau d'acheteurs qualifiés",
+      "Accompagnement complet",
     ],
   },
   {
     icon: Key,
-    title: "Louer",
-    description: "Des appartements et maisons de qualité, vérifiés et prêts à l'emploi.",
+    title: "Location de Biens",
+    description: "Gestion locative complète pour les copropriétaires qui nous confient leurs unités.",
     href: "/properties?type=rent",
     features: [
-      "Biens vérifiés",
-      "Contrats sécurisés",
+      "Sélection des locataires",
+      "Gestion des loyers",
+      "États des lieux",
       "Service conciergerie",
-      "Assurance incluse",
-    ],
-  },
-  {
-    icon: Building2,
-    title: "Syndic IA",
-    description: "Gestion de copropriété intelligente, automatisée et transparente.",
-    href: "/syndic",
-    features: [
-      "Assistant IA 24/7",
-      "Comptabilité automatisée",
-      "Maintenance prédictive",
-      "Reporting temps réel",
     ],
   },
 ];
 
 const stats = [
-  { value: "2,500+", label: "Propriétés gérées" },
-  { value: "98%", label: "Clients satisfaits" },
-  { value: "15+", label: "Années d'expérience" },
-  { value: "24/7", label: "Support IA" },
+  { value: "150+", label: "Copropriétés gérées" },
+  { value: "8,500+", label: "Lots sous gestion" },
+  { value: "98%", label: "Satisfaction client" },
+  { value: "<2h", label: "Temps de réponse moyen" },
+];
+
+const testimonials = [
+  {
+    quote: "Depuis que SyndicIA gère notre copropriété, tout est plus simple. L'assistant répond instantanément et les décomptes sont toujours à jour.",
+    author: "Marie Dubois",
+    role: "Présidente du conseil, Résidence Les Érables",
+  },
+  {
+    quote: "La transparence financière et la réactivité de l'équipe ont transformé notre expérience de copropriétaire. Je recommande vivement.",
+    author: "Jean-Pierre Martin",
+    role: "Copropriétaire, Immeuble Haussmann",
+  },
 ];
 
 const LandingPage = () => {
-  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
-    const loadFeatured = async () => {
-      const properties = await propertyService.getFeaturedProperties();
-      setFeaturedProperties(properties);
-    };
-    loadFeatured();
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -75,15 +165,15 @@ const LandingPage = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Luxury interior"
+            alt="Modern building interior"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/40" />
         </div>
 
         {/* Content */}
         <div className="container relative mx-auto flex min-h-screen flex-col justify-center px-4 pt-24 md:px-6">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -91,7 +181,7 @@ const LandingPage = () => {
             >
               <span className="inline-flex items-center gap-2 rounded-full bg-accent/20 px-4 py-2 text-sm font-medium text-accent backdrop-blur-sm">
                 <Sparkles className="h-4 w-4" />
-                Propulsé par l'Intelligence Artificielle
+                Syndic de Copropriété Nouvelle Génération
               </span>
             </motion.div>
 
@@ -101,63 +191,64 @@ const LandingPage = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
             >
-              L'immobilier de demain,
+              Votre copropriété mérite
               <br />
-              <span className="text-accent">aujourd'hui.</span>
+              <span className="text-accent">l'intelligence artificielle.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-6 max-w-lg text-lg text-white/80"
+              className="mt-6 max-w-xl text-lg text-white/80"
             >
-              Achat, location et gestion de copropriété intelligente. Découvrez une nouvelle façon de vivre l'immobilier à Bruxelles.
+              SyndicIA révolutionne la gestion de copropriété avec une approche 
+              100% digitale, transparente et réactive. Assistant IA 24/7, 
+              comptabilité automatisée, maintenance prédictive.
             </motion.p>
 
-            {/* Search Bar */}
+            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-8"
+              className="mt-8 flex flex-col gap-4 sm:flex-row"
             >
-              <div className="glass-card flex items-center gap-2 p-2 md:max-w-lg">
-                <div className="flex flex-1 items-center gap-3 rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">
-                  <Search className="h-5 w-5 text-white/60" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Rechercher une adresse, un quartier..."
-                    className="flex-1 bg-transparent text-white placeholder-white/50 focus:outline-none"
-                  />
-                  <kbd className="hidden rounded border border-white/20 px-2 py-1 font-mono text-xs text-white/50 md:block">
-                    ⌘K
-                  </kbd>
-                </div>
-                <Button variant="sage" size="lg" className="shrink-0">
-                  Rechercher
+              <Link to="/syndic">
+                <Button variant="sage" size="xl">
+                  Découvrir nos services
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
-              </div>
+              </Link>
+              <Link to="/portal">
+                <Button 
+                  variant="outline" 
+                  size="xl" 
+                  className="border-white/20 text-white hover:bg-white/10 hover:text-white"
+                >
+                  Espace copropriétaire
+                </Button>
+              </Link>
+            </motion.div>
 
-              {/* Quick Filters */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Link to="/properties?type=sale">
-                  <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10 hover:text-white">
-                    Acheter
-                  </Button>
-                </Link>
-                <Link to="/properties?type=rent">
-                  <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10 hover:text-white">
-                    Louer
-                  </Button>
-                </Link>
-                <Link to="/estimate">
-                  <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10 hover:text-white">
-                    Estimer mon bien
-                  </Button>
-                </Link>
+            {/* Trust badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-12 flex flex-wrap items-center gap-6 border-t border-white/10 pt-8"
+            >
+              <div className="flex items-center gap-2 text-white/60">
+                <Shield className="h-5 w-5 text-accent" />
+                <span className="text-sm">Agréé IPI</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/60">
+                <Clock className="h-5 w-5 text-accent" />
+                <span className="text-sm">Support 24/7</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/60">
+                <FileText className="h-5 w-5 text-accent" />
+                <span className="text-sm">100% Digital</span>
               </div>
             </motion.div>
           </div>
@@ -212,7 +303,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Main Syndic Services Section */}
       <section className="py-20 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
@@ -223,51 +314,165 @@ const LandingPage = () => {
             className="text-center"
           >
             <span className="text-sm font-medium uppercase tracking-wider text-accent">
-              Nos Services
+              Notre Métier
             </span>
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              Une solution complète pour
+              La gestion de copropriété
               <br />
-              <span className="text-accent">tous vos besoins immobiliers</span>
+              <span className="text-accent">réinventée par l'IA</span>
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              SyndicIA combine expertise immobilière et intelligence artificielle 
+              pour offrir une gestion de copropriété transparente, efficace et moderne.
+            </p>
           </motion.div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-            {services.map((service, index) => (
+            {syndicServices.map((service, index) => (
               <ServiceCard key={service.title} {...service} index={index} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Properties */}
+      {/* Why Choose Us Section */}
       <section className="bg-muted py-20 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
               <span className="text-sm font-medium uppercase tracking-wider text-accent">
-                Sélection
+                Pourquoi SyndicIA
               </span>
               <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
-                Nos coups de cœur
+                Un syndic qui comprend vos besoins
               </h2>
+              <p className="mt-4 text-muted-foreground">
+                Fini les syndics injoignables et les comptes obscurs. SyndicIA place 
+                la transparence et la réactivité au cœur de sa mission.
+              </p>
+
+              <ul className="mt-8 space-y-4">
+                {[
+                  "Réponse à vos questions en moins de 2 heures (IA 24/7)",
+                  "Accès en temps réel à tous vos documents et comptes",
+                  "Anticipation des problèmes grâce à la maintenance prédictive",
+                  "Réduction moyenne de 30% des charges de copropriété",
+                  "Vote électronique sécurisé pour les AG",
+                  "Conformité légale garantie avec veille réglementaire IA",
+                ].map((benefit, index) => (
+                  <motion.li
+                    key={benefit}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                      <ChevronRight className="h-3 w-3" />
+                    </div>
+                    <span>{benefit}</span>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <Link to="/syndic" className="mt-8 inline-block">
+                <Button variant="sage" size="lg">
+                  En savoir plus
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
             </motion.div>
 
-            <Link to="/properties">
-              <Button variant="sage-outline">
-                Voir tous les biens
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+            {/* Testimonial Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card-elevated p-8"
+            >
+              <div className="flex gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg
+                    key={i}
+                    className="h-5 w-5 text-amber-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProperties.map((property, index) => (
-              <PropertyCard key={property.id} property={property} index={index} />
+              <motion.div
+                key={currentTestimonial}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <blockquote className="mt-6 text-lg">
+                  "{testimonials[currentTestimonial].quote}"
+                </blockquote>
+
+                <div className="mt-6 flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-full bg-sage-light" />
+                  <div>
+                    <p className="font-medium">{testimonials[currentTestimonial].author}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {testimonials[currentTestimonial].role}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Dots indicator */}
+              <div className="mt-6 flex justify-center gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`h-2 w-2 rounded-full transition-colors ${
+                      index === currentTestimonial ? "bg-accent" : "bg-muted"
+                    }`}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Services Section */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <span className="text-sm font-medium uppercase tracking-wider text-accent">
+              Services Complémentaires
+            </span>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
+              La confiance de nos copropriétaires
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Grâce à la relation de confiance établie dans notre gestion de syndic, 
+              nos copropriétaires nous confient également leurs biens pour la vente 
+              ou la location.
+            </p>
+          </motion.div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:mt-16">
+            {additionalServices.map((service, index) => (
+              <ServiceCard key={service.title} {...service} index={index} />
             ))}
           </div>
         </div>
@@ -286,25 +491,31 @@ const LandingPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              Prêt à transformer votre
+            <Building2 className="mx-auto h-16 w-16 text-accent" />
+            <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
+              Prêt à moderniser la gestion
               <br />
-              expérience immobilière ?
+              de votre copropriété ?
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg text-primary-foreground/70">
-              Rejoignez les milliers de propriétaires et locataires qui font confiance à notre plateforme intelligente.
+              Rejoignez les 150+ copropriétés qui font déjà confiance à SyndicIA 
+              pour une gestion transparente et intelligente.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link to="/properties">
+              <Link to="/contact">
                 <Button variant="sage" size="xl">
-                  Explorer les biens
+                  Demander un devis gratuit
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               </Link>
               <Link to="/portal">
-                <Button variant="outline" size="xl" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                  Espace client
+                <Button 
+                  variant="outline" 
+                  size="xl" 
+                  className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                >
+                  Espace copropriétaire
                 </Button>
               </Link>
             </div>

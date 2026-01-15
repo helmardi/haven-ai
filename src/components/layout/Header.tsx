@@ -5,10 +5,10 @@ import { Menu, X, Search, User, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Acheter", href: "/properties?type=sale" },
-  { label: "Louer", href: "/properties?type=rent" },
-  { label: "Syndic", href: "/syndic" },
-  { label: "Estimer", href: "/estimate" },
+  { label: "Syndic IA", href: "/syndic" },
+  { label: "Services", href: "/services" },
+  { label: "Biens Confiés", href: "/properties" },
+  { label: "Contact", href: "/contact" },
 ];
 
 interface HeaderProps {
@@ -29,7 +29,7 @@ const Header = ({ onSearchOpen }: HeaderProps) => {
                 <Building2 className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="font-display text-xl font-semibold tracking-tight">
-                Immo<span className="text-accent">Trust</span>
+                Syndic<span className="text-accent">IA</span>
               </span>
             </Link>
 
@@ -65,7 +65,7 @@ const Header = ({ onSearchOpen }: HeaderProps) => {
 
               <Link to="/portal" className="hidden md:block">
                 <Button variant="sage" size="sm">
-                  Espace Client
+                  Espace Copropriétaire
                 </Button>
               </Link>
 
@@ -109,14 +109,11 @@ const Header = ({ onSearchOpen }: HeaderProps) => {
                 </Link>
               ))}
               <div className="mt-2 border-t pt-4">
-                <Button
-                  variant="sage"
-                  className="w-full"
-                  onClick={onSearchOpen}
-                >
-                  <Search className="mr-2 h-4 w-4" />
-                  Rechercher
-                </Button>
+                <Link to="/portal">
+                  <Button variant="sage" className="w-full">
+                    Espace Copropriétaire
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>
