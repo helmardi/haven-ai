@@ -4,10 +4,12 @@ import { useSearchParams } from "react-router-dom";
 import {
   Search,
   SlidersHorizontal,
-  MapPin,
   Grid3X3,
   Map,
   X,
+  Building2,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -20,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link } from "react-router-dom";
 
 const PropertyDiscovery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,20 +68,60 @@ const PropertyDiscovery = () => {
   return (
     <Layout>
       <div className="min-h-screen pt-28">
-        {/* Header */}
+        {/* Hero Banner */}
+        <div className="bg-primary py-12">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex flex-col items-center text-center">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/20 px-4 py-2 text-sm font-medium text-accent">
+                <Sparkles className="h-4 w-4" />
+                Services Complémentaires
+              </span>
+              <h1 className="mt-6 font-display text-3xl font-bold text-primary-foreground md:text-4xl">
+                Biens Confiés par nos Copropriétaires
+              </h1>
+              <p className="mt-4 max-w-2xl text-primary-foreground/70">
+                Nos copropriétaires nous font confiance pour la gestion de leur immeuble.
+                Certains nous confient également leurs biens pour la vente ou la location.
+                Découvrez ces opportunités exclusives.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Info Banner */}
+        <div className="border-b bg-sage-light/30">
+          <div className="container mx-auto px-4 py-4 md:px-6">
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="flex items-center gap-3">
+                <Building2 className="h-5 w-5 text-accent" />
+                <p className="text-sm">
+                  <strong>Notre activité principale :</strong> Gestion de copropriétés avec IA
+                </p>
+              </div>
+              <Link to="/syndic">
+                <Button variant="sage" size="sm">
+                  Découvrir nos services Syndic
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters Header */}
         <div className="border-b bg-card">
           <div className="container mx-auto px-4 py-6 md:px-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h1 className="font-display text-2xl font-bold md:text-3xl">
+                <h2 className="font-display text-xl font-bold md:text-2xl">
                   {filters.type === "sale"
                     ? "Biens à vendre"
                     : filters.type === "rent"
                     ? "Biens à louer"
-                    : "Tous les biens"}
-                </h1>
+                    : "Tous les biens confiés"}
+                </h2>
                 <p className="mt-1 text-muted-foreground">
-                  {properties.length} propriété{properties.length > 1 ? "s" : ""} trouvée{properties.length > 1 ? "s" : ""}
+                  {properties.length} bien{properties.length > 1 ? "s" : ""} disponible{properties.length > 1 ? "s" : ""}
                 </p>
               </div>
 
@@ -245,10 +288,10 @@ const PropertyDiscovery = () => {
                 <Search className="h-8 w-8 text-muted-foreground" />
               </div>
               <h2 className="mt-6 font-display text-xl font-semibold">
-                Aucun bien trouvé
+                Aucun bien disponible
               </h2>
               <p className="mt-2 text-muted-foreground">
-                Essayez de modifier vos critères de recherche
+                Essayez de modifier vos critères de recherche ou revenez bientôt.
               </p>
               <Button variant="sage" className="mt-6" onClick={clearFilters}>
                 Réinitialiser les filtres
@@ -261,6 +304,25 @@ const PropertyDiscovery = () => {
               ))}
             </div>
           )}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="border-t bg-muted py-12">
+          <div className="container mx-auto px-4 text-center md:px-6">
+            <h3 className="font-display text-2xl font-bold">
+              Vous êtes copropriétaire et souhaitez nous confier un bien ?
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+              En tant que client de notre service Syndic, bénéficiez de conditions
+              préférentielles pour la mise en vente ou location de votre bien.
+            </p>
+            <Link to="/portal" className="mt-6 inline-block">
+              <Button variant="sage" size="lg">
+                Nous confier un bien
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </Layout>

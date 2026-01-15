@@ -20,9 +20,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/properties" element={<PropertyDiscovery />} />
-          <Route path="/properties/:id" element={<PropertyDiscovery />} />
+          <Route path="/biens-confies" element={<PropertyDiscovery />} />
           <Route path="/syndic" element={<SyndicServices />} />
           <Route path="/portal" element={<ClientPortal />} />
+          <Route path="/espace-client" element={<ClientPortal />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
