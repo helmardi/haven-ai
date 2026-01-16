@@ -1,203 +1,263 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ============================================
    CSS CUSTOM PROPERTIES (DESIGN TOKENS)
-   Compatible with Tailwind CSS v3.4+
+   Tailwind CSS v4 Compatible
    ============================================ */
 
-@layer base {
-  :root {
-    /* Modern Architectural Trust Palette - Using oklch for modern color space */
-    --background: 48 20% 98%;
-    --foreground: 240 5% 12%;
+@theme {
+  /* Border radius */
+  --radius-lg: 0.75rem;
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 5% 12%;
+  /* Fonts */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 5% 12%;
+  /* Custom shadows */
+  --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.08);
+  --shadow-elevated: 0 12px 40px -8px hsl(0 0% 0% / 0.12);
+  --shadow-sage: 0 8px 32px -8px hsl(145 25% 45% / 0.3);
 
-    /* Deep Charcoal - Primary */
-    --primary: 240 5% 12%;
-    --primary-foreground: 48 20% 98%;
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
 
-    /* Soft Sage Green - Accent/CTA */
-    --accent: 145 25% 45%;
-    --accent-foreground: 0 0% 100%;
-
-    --secondary: 48 15% 94%;
-    --secondary-foreground: 240 5% 12%;
-
-    --muted: 48 10% 92%;
-    --muted-foreground: 240 5% 40%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 48 10% 88%;
-    --input: 48 10% 88%;
-    --ring: 145 25% 45%;
-
-    --radius: 0.75rem;
-
-    /* Custom semantic tokens */
-    --sage: 145 25% 45%;
-    --sage-light: 145 20% 92%;
-    --sage-dark: 145 30% 30%;
-    --charcoal: 240 5% 12%;
-    --charcoal-light: 240 5% 22%;
-    --cream: 48 20% 98%;
-    --warm-grey: 48 10% 92%;
-
-    /* Glassmorphism */
-    --glass-bg: 0 0% 100% / 0.75;
-    --glass-border: 0 0% 100% / 0.3;
-    --glass-blur: 20px;
-
-    /* Shadows */
-    --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.08);
-    --shadow-elevated: 0 12px 40px -8px hsl(0 0% 0% / 0.12);
-    --shadow-sage: 0 8px 32px -8px hsl(145 25% 45% / 0.3);
-
-    /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5% 30%;
-    --sidebar-primary: 240 5% 12%;
-    --sidebar-primary-foreground: 48 20% 98%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 5% 12%;
-    --sidebar-border: 220 10% 91%;
-    --sidebar-ring: 217 90% 60%;
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
   }
 
-  .dark {
-    --background: 240 5% 8%;
-    --foreground: 48 20% 98%;
-
-    --card: 240 5% 12%;
-    --card-foreground: 48 20% 98%;
-
-    --popover: 240 5% 12%;
-    --popover-foreground: 48 20% 98%;
-
-    --primary: 48 20% 98%;
-    --primary-foreground: 240 5% 12%;
-
-    --accent: 145 25% 45%;
-    --accent-foreground: 0 0% 100%;
-
-    --secondary: 240 5% 16%;
-    --secondary-foreground: 48 20% 98%;
-
-    --muted: 240 5% 16%;
-    --muted-foreground: 48 10% 60%;
-
-    --destructive: 0 62% 35%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 5% 22%;
-    --input: 240 5% 22%;
-    --ring: 145 25% 45%;
-
-    --glass-bg: 240 5% 12% / 0.75;
-    --glass-border: 0 0% 100% / 0.1;
-
-    --sidebar-background: 240 5% 10%;
-    --sidebar-foreground: 240 5% 96%;
-    --sidebar-primary: 220 75% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4% 16%;
-    --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 240 4% 16%;
-    --sidebar-ring: 217 90% 60%;
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
   }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+}
+
+/* ============================================
+   CSS VARIABLES FOR THEMING
+   ============================================ */
+
+:root {
+  /* Modern Architectural Trust Palette */
+  --background: 48 20% 98%;
+  --foreground: 240 5% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 240 5% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 5% 12%;
+
+  /* Deep Charcoal - Primary */
+  --primary: 240 5% 12%;
+  --primary-foreground: 48 20% 98%;
+
+  /* Soft Sage Green - Accent/CTA */
+  --accent: 145 25% 45%;
+  --accent-foreground: 0 0% 100%;
+
+  --secondary: 48 15% 94%;
+  --secondary-foreground: 240 5% 12%;
+
+  --muted: 48 10% 92%;
+  --muted-foreground: 240 5% 40%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 48 10% 88%;
+  --input: 48 10% 88%;
+  --ring: 145 25% 45%;
+
+  --radius: 0.75rem;
+
+  /* Custom semantic tokens */
+  --sage: 145 25% 45%;
+  --sage-light: 145 20% 92%;
+  --sage-dark: 145 30% 30%;
+  --charcoal: 240 5% 12%;
+  --charcoal-light: 240 5% 22%;
+  --cream: 48 20% 98%;
+  --warm-grey: 48 10% 92%;
+
+  /* Glassmorphism */
+  --glass-bg: 0 0% 100% / 0.75;
+  --glass-border: 0 0% 100% / 0.3;
+  --glass-blur: 20px;
+
+  /* Sidebar */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5% 30%;
+  --sidebar-primary: 240 5% 12%;
+  --sidebar-primary-foreground: 48 20% 98%;
+  --sidebar-accent: 240 5% 96%;
+  --sidebar-accent-foreground: 240 5% 12%;
+  --sidebar-border: 220 10% 91%;
+  --sidebar-ring: 217 90% 60%;
+}
+
+.dark {
+  --background: 240 5% 8%;
+  --foreground: 48 20% 98%;
+
+  --card: 240 5% 12%;
+  --card-foreground: 48 20% 98%;
+
+  --popover: 240 5% 12%;
+  --popover-foreground: 48 20% 98%;
+
+  --primary: 48 20% 98%;
+  --primary-foreground: 240 5% 12%;
+
+  --accent: 145 25% 45%;
+  --accent-foreground: 0 0% 100%;
+
+  --secondary: 240 5% 16%;
+  --secondary-foreground: 48 20% 98%;
+
+  --muted: 240 5% 16%;
+  --muted-foreground: 48 10% 60%;
+
+  --destructive: 0 62% 35%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 240 5% 22%;
+  --input: 240 5% 22%;
+  --ring: 145 25% 45%;
+
+  --glass-bg: 240 5% 12% / 0.75;
+  --glass-border: 0 0% 100% / 0.1;
+
+  --sidebar-background: 240 5% 10%;
+  --sidebar-foreground: 240 5% 96%;
+  --sidebar-primary: 220 75% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 4% 16%;
+  --sidebar-accent-foreground: 240 5% 96%;
+  --sidebar-border: 240 4% 16%;
+  --sidebar-ring: 217 90% 60%;
 }
 
 /* ============================================
    BASE STYLES
    ============================================ */
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+* {
+  border-color: hsl(var(--border));
+}
 
-  body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
-  }
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* ============================================
    COMPONENT STYLES
    ============================================ */
 
-@layer components {
-  /* Glassmorphism Card */
-  .glass-card {
-    @apply relative overflow-hidden rounded-2xl;
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--shadow-soft);
-  }
+/* Glassmorphism Card */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: hsl(var(--glass-bg));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid hsl(var(--glass-border));
+  box-shadow: var(--shadow-soft);
+}
 
-  .glass-card-elevated {
-    @apply glass-card;
-    box-shadow: var(--shadow-elevated);
-  }
+.glass-card-elevated {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: hsl(var(--glass-bg));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid hsl(var(--glass-border));
+  box-shadow: var(--shadow-elevated);
+}
 
-  /* Sage glow effect */
-  .sage-glow {
-    box-shadow: var(--shadow-sage);
-  }
+/* Sage glow effect */
+.sage-glow {
+  box-shadow: var(--shadow-sage);
+}
 
-  /* Text gradient */
-  .text-gradient-sage {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--sage)) 0%, hsl(var(--sage-dark)) 100%);
-  }
+/* Text gradient */
+.text-gradient-sage {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(135deg, hsl(var(--sage)) 0%, hsl(var(--sage-dark)) 100%);
+}
 
-  /* Animated underline */
-  .animated-underline {
-    @apply relative;
-  }
-  
-  .animated-underline::after {
-    @apply absolute bottom-0 left-0 h-[2px] w-0 bg-accent transition-all duration-300;
-    content: '';
-  }
-  
-  .animated-underline:hover::after {
-    @apply w-full;
-  }
+/* Animated underline */
+.animated-underline {
+  position: relative;
+}
 
-  /* Command palette styling */
-  .command-palette {
-    @apply glass-card-elevated;
-    background: hsl(var(--card));
-  }
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: hsl(var(--accent));
+  transition: all 0.3s;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* Command palette styling */
+.command-palette {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid hsl(var(--glass-border));
+  box-shadow: var(--shadow-elevated);
 }
 
 /* ============================================
-   UTILITY STYLES
+   UTILITY CLASSES
    ============================================ */
 
-@layer utilities {
-  .font-display {
-    font-family: 'Space Grotesk', sans-serif;
-  }
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
 
-  .font-body {
-    font-family: 'Inter', sans-serif;
-  }
+.font-body {
+  font-family: 'Inter', sans-serif;
 }
